@@ -25,6 +25,8 @@ for(const u of users){
  const html=window.test.studyView();assert.ok(html.includes('100%'));assert.ok(html.includes(u.plan_days+'일 완주'));
  assert.ok(!html.includes('undefined'));assert.ok(!html.includes('NaN'));
  assert.ok(window.test.adminView().includes('100%'));
+ assert.ok(window.test.adminView().includes('name="plan_days" required'));
+ for(const days of [50,60,70,80])assert.ok(window.test.adminView().includes(`<option value="${days}">${days}일 수업계획</option>`));
  assert.ok(window.test.linksView().includes('상권 32-1강'));
 }
 // A switch never maps another plan's day records onto different lectures.
@@ -32,3 +34,8 @@ window.test.set([{...users[0],plan_days:60}],rows,'s50');
 assert.equal(window.test.metric('s50').checks,0);
 window.test.set(users,rows,'s50');assert.equal(window.test.metric('s50').checks,200);
 console.log('PASS: 80 lessons, 4 schedules, complete coverage, statistics, plan record isolation, student/admin/link views');
+assert.ok(src.includes('<th>수업계획</th>'));
+assert.ok(src.includes('Number(r.plan_days)'));
+assert.ok(!src.includes('/rest/v1/profiles'));
+assert.ok(!src.includes('/rest/v1/progress'));
+assert.ok(!src.includes('/functions/v1/manage-student\''));
