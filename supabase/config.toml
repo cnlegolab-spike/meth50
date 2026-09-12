@@ -1,0 +1,3 @@
+[functions.manage-student]
+verify_jwt = false
+# 함수 내부에서 Supabase Auth 서버에 토큰을 검증하고 DB 관리자 권한을 확인합니다.
